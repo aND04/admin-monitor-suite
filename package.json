@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build:prod": "ng build --prod --build-optimizer --base-href=\"/ams/\"",
+    "build:prod": "ng build --prod --build-optimizer --base-href=\"/admin-monitor-suite/\"",
     "build:stats": "ng build --prod --build-optimizer --stats-json",
     "test": "ng test",
     "lint": "ng lint",
