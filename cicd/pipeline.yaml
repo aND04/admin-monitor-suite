@@ -1,0 +1,88 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  AdminMonitorSuiteCodeBuild:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      ServiceRole: !GetAtt AdminMonitorSuiteCodeBuildRole.Arn
+      Artifacts:
+        Type: S3
+        Location: !Ref ArtifactsBucket
+        Packaging: NONE
+        EncryptionDisabled: true
+        Name: "admin-monitor-suite"
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: 'aws/codebuild/standard:3.0'
+      Source:
+        Type: GITHUB
+        Location: 'https://github.com/aND04/admin-monitor-suite.git'
+        BuildSpec: 'cicd/buildspec.yaml'
+      SourceVersion: 'develop-aws'
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PUSH
+            - Type: HEAD_REF
+              Pattern: develop-aws
+      TimeoutInMinutes: 10
+  AdminMonitorSuiteCodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: [ 'sts:AssumeRole' ]
+            Effect: Allow
+            Principal:
+              Service: [ codebuild.amazonaws.com ]
+        Version: '2012-10-17'
+      Path: /
+      Policies:
+        - PolicyName: CodeBuildAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Action:
+                  - 'logs:*'
+                  - 'ec2:CreateNetworkInterface'
+                  - 'ec2:DescribeNetworkInterfaces'
+                  - 'ec2:DeleteNetworkInterface'
+                  - 'ec2:DescribeSubnets'
+                  - 'ec2:DescribeSecurityGroups'
+                  - 'ec2:DescribeDhcpOptions'
+                  - 'ec2:DescribeVpcs'
+                  - 'ec2:CreateNetworkInterfacePermission'
+                Effect: Allow
+                Resource: '*'
+  ArtifactsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: index.html
+    DeletionPolicy: Retain
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      PolicyDocument:
+        Id: MyPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Join
+              - ''
+              - - 'arn:aws:s3:::'
+                - !Ref ArtifactsBucket
+                - /*
+      Bucket: !Ref ArtifactsBucket
+Outputs:
+  WebsiteURL:
+    Value: !GetAtt
+      - ArtifactsBucket
+      - WebsiteURL
+    Description: URL for website hosted on S3
