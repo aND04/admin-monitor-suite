@@ -5,10 +5,14 @@ Parameters:
     Type: AWS::SSM::Parameter::Value<String>
     Description: The readable account alias, used as bounded context
     Default: /config/account/name
+  GithubUsername:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Github username value
+    Default: /config/github/username
   GithubOAuthToken:
     Type: AWS::SSM::Parameter::Value<String>
     Description: Github oauth token value
-    Default: github-oauth-token
+    Default: /config/github/oauth
 Mappings:
   Config:
     Service:
@@ -98,7 +102,7 @@ Resources:
       Name: CodePipelineWebhook
       Authentication: GITHUB_HMAC
       AuthenticationConfiguration:
-        SecretToken: 51c281d7378f3ddd5fe79963a9196ee39cec8fe8
+        SecretToken: !Ref GithubOAuthToken
       Filters:
         -
           JsonPath: "$.ref"
@@ -127,11 +131,11 @@ Resources:
                 Version: '1'
                 Provider: GitHub
               Configuration:
-                Owner: aND04
+                Owner: !Ref GithubUsername
                 Repo: admin-monitor-suite
                 PollForSourceChanges: 'false'
                 Branch: develop-aws
-                OAuthToken: 51c281d7378f3ddd5fe79963a9196ee39cec8fe8
+                OAuthToken: !Ref GithubOAuthToken
               InputArtifacts: []
               OutputArtifacts:
                 - Name: SourceArtifact
