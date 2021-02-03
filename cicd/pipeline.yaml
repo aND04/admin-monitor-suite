@@ -99,7 +99,7 @@ Resources:
   CodePipelineSourceWebhook:
     Type: AWS::CodePipeline::Webhook
     Properties:
-      Name: CodePipelineWebhook
+      Name: AdminMonitorSuiteCodePipelineWebhook
       Authentication: GITHUB_HMAC
       AuthenticationConfiguration:
         SecretToken: !Ref GithubOAuthToken
