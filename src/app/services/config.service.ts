@@ -25,6 +25,6 @@ export class ConfigService {
   }
 
   getServer(service: string): string {
-    return this.server + service;
+    return 'http://ec2-54-74-174-74.eu-west-1.compute.amazonaws.com:3000/' + service;
   }
 }
