@@ -22,8 +22,10 @@ Resources:
         Statement:
           - Effect: Allow
             Principal:
-              Service: codepipeline.amazonaws.com
-            Action: sts:AssumeRole
+              Service: [ codebuild.amazonaws.com ]
+            Action: [ sts:AssumeRole ]
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess #TODO: Reduce permissions
       Policies:
         - PolicyName: CodeBuildAcess
           PolicyDocument:
@@ -61,6 +63,14 @@ Resources:
     Properties:
       Name: !FindInMap [ Config, Service, Name ]
       ServiceRole: !GetAtt CodeBuildRole.Arn
+        #Cache:
+        #  Type: S3
+      # FIXME - bucketname
+      #  Location:
+      #    - !Sub
+      #      - ${BucketName}/cache/${RepositoryName}
+      #      - BucketName: !ImportValue bitbucket-integration-s3-bucket
+      #        RepositoryName: !FindInMap [ Config, Service, Name ]
       Artifacts:
         Type: CODEPIPELINE
       Source:
@@ -70,10 +80,22 @@ Resources:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
         Image: 'aws/codebuild/standard:3.0'
+  AdminMonitorCodePipelineRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: [ codepipeline.amazonaws.com ]
+            Action: [ sts:AssumeRole ]
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess #TODO: Reduce permissions
   CodePipelineSourceWebhook:
     Type: AWS::CodePipeline::Webhook
     Properties:
-      Name: AdminMonitorSuiteCodePipelineWebhook
+      Name: CodePipelineWebhook
       Authentication: GITHUB_HMAC
       AuthenticationConfiguration:
         SecretToken: !Ref GithubOAuthToken
@@ -91,7 +113,7 @@ Resources:
       ArtifactStore:
         Type: S3
         Location: !Ref ArtifactsBucket
-      RoleArn: !GetAtt CodeBuildRole.Arn
+      RoleArn: !GetAtt AdminMonitorCodePipelineRole.Arn
       Stages:
         - Name: SourceRepository
           Actions:
@@ -103,7 +125,7 @@ Resources:
                 Provider: GitHub
               Configuration:
                 Owner: !Ref GithubUsername
-                Repo: !FindInMap [ Config, Service, Name ]
+                Repo: admin-monitor-suite
                 PollForSourceChanges: 'false'
                 Branch: develop-aws
                 OAuthToken: !Ref GithubOAuthToken
