@@ -26,10 +26,8 @@ Resources:
         Statement:
           - Effect: Allow
             Principal:
-              Service: [ codebuild.amazonaws.com ]
-            Action: [ sts:AssumeRole ]
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AdministratorAccess #TODO: Reduce permissions
+              Service: codebuild.amazonaws.com
+            Action: sts:AssumeRole
       Policies:
         - PolicyName: CodeBuildAcess
           PolicyDocument:
@@ -67,14 +65,6 @@ Resources:
     Properties:
       Name: !FindInMap [ Config, Service, Name ]
       ServiceRole: !GetAtt CodeBuildRole.Arn
-      #Cache:
-      #  Type: S3
-        # FIXME - bucketname
-      #  Location:
-      #    - !Sub
-      #      - ${BucketName}/cache/${RepositoryName}
-      #      - BucketName: !ImportValue bitbucket-integration-s3-bucket
-      #        RepositoryName: !FindInMap [ Config, Service, Name ]
       Artifacts:
         Type: CODEPIPELINE
       Source:
@@ -84,18 +74,6 @@ Resources:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
         Image: 'aws/codebuild/standard:3.0'
-  AdminMonitorCodePipelineRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service: [ codepipeline.amazonaws.com ]
-            Action: [ sts:AssumeRole ]
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AdministratorAccess #TODO: Reduce permissions
   CodePipelineSourceWebhook:
     Type: AWS::CodePipeline::Webhook
     Properties:
@@ -104,8 +82,7 @@ Resources:
       AuthenticationConfiguration:
         SecretToken: !Ref GithubOAuthToken
       Filters:
-        -
-          JsonPath: "$.ref"
+        - JsonPath: "$.ref"
           MatchEquals: refs/heads/{Branch}
       TargetPipeline: !Ref CodePipeline
       TargetAction: SourceAction
@@ -118,13 +95,11 @@ Resources:
       ArtifactStore:
         Type: S3
         Location: !Ref ArtifactsBucket
-      RoleArn: !GetAtt AdminMonitorCodePipelineRole.Arn
+      RoleArn: !GetAtt CodeBuildRole.Arn
       Stages:
-        -
-          Name: SourceRepository
+        - Name: SourceRepository
           Actions:
-            -
-              Name: SourceAction
+            - Name: SourceAction
               ActionTypeId:
                 Category: Source
                 Owner: ThirdParty
@@ -136,15 +111,13 @@ Resources:
                 PollForSourceChanges: 'false'
                 Branch: develop-aws
                 OAuthToken: !Ref GithubOAuthToken
-              InputArtifacts: []
+              InputArtifacts: [ ]
               OutputArtifacts:
                 - Name: SourceArtifact
               RunOrder: 1
-        -
-          Name: Build
+        - Name: Build
           Actions:
-            -
-              Name: ExecuteBuild
+            - Name: ExecuteBuild
               ActionTypeId:
                 Category: Build
                 Owner: AWS
@@ -157,11 +130,9 @@ Resources:
               OutputArtifacts:
                 - Name: AngularBuild
               RunOrder: 1
-        -
-          Name: Deploy
+        - Name: Deploy
           Actions:
-            -
-              Name: DeployS3
+            - Name: DeployS3
               ActionTypeId:
                 Category: Deploy
                 Owner: AWS
