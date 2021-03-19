@@ -1,10 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Pipeline Template for admin-monitor-suite
 Parameters:
-  AccountName:
-    Type: AWS::SSM::Parameter::Value<String>
-    Description: The readable account alias, used as bounded context
-    Default: /config/account/name
   GithubUsername:
     Type: AWS::SSM::Parameter::Value<String>
     Description: Github username value
@@ -26,7 +22,7 @@ Resources:
         Statement:
           - Effect: Allow
             Principal:
-              Service: codebuild.amazonaws.com
+              Service: codepipeline.amazonaws.com
             Action: sts:AssumeRole
       Policies:
         - PolicyName: CodeBuildAcess
@@ -107,7 +103,7 @@ Resources:
                 Provider: GitHub
               Configuration:
                 Owner: !Ref GithubUsername
-                Repo: admin-monitor-suite
+                Repo: !FindInMap [ Config, Service, Name ]
                 PollForSourceChanges: 'false'
                 Branch: develop-aws
                 OAuthToken: !Ref GithubOAuthToken
