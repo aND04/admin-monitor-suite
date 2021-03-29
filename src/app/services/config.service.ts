@@ -25,6 +25,6 @@ export class ConfigService {
   }
 
   getServer(service: string): string {
-    return 'http://ec2-54-74-174-74.eu-west-1.compute.amazonaws.com:3000' + service;
+    return 'http://ms-cf-888269295091-LoadBalancer-1506010025.eu-west-1.elb.amazonaws.com' + service;
   }
 }
