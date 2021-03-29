@@ -56,7 +56,8 @@
     "domains": "Domains",
     "crawler": "Crawler",
     "pages": "Pages",
-    "settings": "Settings"
+    "settings": "Settings",
+    "usability": "Usability"
   },
   "HOME_PAGE": {
     "title": "Welcome",
@@ -954,6 +955,16 @@
     "TOOLTIP": {
       "depth": "Type 1 to only search for pages directly linked to the homepage",
       "pages": "Type 0 to search for all pages"
+    }
+  },
+  "USABILITY_PAGE": {
+    "LIST": {
+      "title": "Usability Checklists",
+      "subtitle": "Lista of all usability checklists",
+      "table": {
+        "_id_label": "id",
+        "createdAt_label": "Created at"
+      }
     }
   },
   "IMPORT": {

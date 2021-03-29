@@ -101,6 +101,7 @@ import { AccessibilityPlotComponent } from './global/accessibility-plot/accessib
 import { CorrectionDistributionDialogComponent } from './dialogs/correction-distribution-dialog/correction-distribution-dialog.component';
 import { EntityStatisticsComponent } from './pages/entity/entity-statistics/entity-statistics.component';
 import { TagStatisticsComponent } from './pages/tag/tag-statistics/tag-statistics.component';
+import { UsabilityComponent } from './pages/usability/usability.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent, canActivate: [NoAuthGuard] },
@@ -117,12 +118,12 @@ const appRoutes: Routes = [
     { path: 'website/:website', component: WebsiteComponent, canActivate: [AdminAuthGuard] },
     { path: 'website/:user/:website', component: WebsiteComponent, canActivate: [AdminAuthGuard] },
     { path: 'website/:user/:website/:page', component: EvaluationResultsComponent, canActivate: [AdminAuthGuard] },
-    //{ path: 'website/:user/:website/:page/:evaluation_id', component: EvaluationResultsComponent, canActivate: [AdminAuthGuard] },
+    // { path: 'website/:user/:website/:page/:evaluation_id', component: EvaluationResultsComponent, canActivate: [AdminAuthGuard] },
     { path: 'website/:user/:website/:page/code', component: WebpageCodeComponent, canActivate: [AdminAuthGuard] },
     { path: 'website/:user/:website/:page/:ele', component: ElementResultComponent, canActivate: [AdminAuthGuard] },
     { path: 'tag/website/:tag/:user/:website', component: WebsiteComponent, canActivate: [AdminAuthGuard] },
     { path: 'tag/website/:tag/:user/:website/:page', component: EvaluationResultsComponent, canActivate: [AdminAuthGuard] },
-    //{ path: 'tag/website/:tag/:user/:website/:page/', component: EvaluationResultsComponent, canActivate: [AdminAuthGuard] },
+    // { path: 'tag/website/:tag/:user/:website/:page/', component: EvaluationResultsComponent, canActivate: [AdminAuthGuard] },
     { path: 'tag/website/:tag/:user/:website/:page/code', component: WebpageCodeComponent, canActivate: [AdminAuthGuard] },
     { path: 'tag/website/:tag/:user/:website/:page/:ele', component: ElementResultComponent, canActivate: [AdminAuthGuard] },
     { path: 'domains', component: DomainsComponent, canActivate: [AdminAuthGuard] },
@@ -132,7 +133,8 @@ const appRoutes: Routes = [
     { path: 'page/:page/:evaluation_id', component: EvaluationResultsComponent, canActivate: [AdminAuthGuard] },
     { path: 'page/:page/:evaluation_id/code', component: WebpageCodeComponent, canActivate: [AdminAuthGuard] },
     { path: 'page/:page/:evaluation_id/:ele', component: ElementResultComponent, canActivate: [AdminAuthGuard] },
-    { path: 'crawler', component: ListOfCrawlsComponent, canActivate: [AdminAuthGuard] }
+    { path: 'crawler', component: ListOfCrawlsComponent, canActivate: [AdminAuthGuard] },
+    { path: 'usability', component: UsabilityComponent, canActivate: [AdminAuthGuard] },
   ]},
   { path: '**', component: NotFound404Component }
 ];
@@ -224,7 +226,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AccessibilityPlotComponent,
     CorrectionDistributionDialogComponent,
     EntityStatisticsComponent,
-    TagStatisticsComponent
+    TagStatisticsComponent,
+    UsabilityComponent
   ],
   imports: [
     BrowserModule,
