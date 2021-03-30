@@ -25,6 +25,10 @@
         "title": "User",
         "subtitle": "Create a new user"
       },
+      "directory": {
+        "title": "Directory",
+        "subtitle": "Create a new directory"
+      },
       "tag": {
         "title": "Tag",
         "subtitle": "Create a new tag"
@@ -50,6 +54,7 @@
   "MENU": {
     "home": "Home",
     "users": "Users",
+    "directories": "Directories",
     "tags": "Tags",
     "entities": "Entities",
     "websites": "Websites",
@@ -63,6 +68,7 @@
     "title": "Welcome",
     "subtitle": "Applications summary",
     "users_label": "Users",
+    "directories_label": "Directories",
     "tags_label": "Tags",
     "websites_label": "Websites",
     "sentence": "Total of {{value}}",
@@ -120,6 +126,12 @@
     "accessibility_plot": {
       "title": "Accessibility plot",
       "label": "Score distribution"
+    },
+    "success_criteria_counter": {
+      "title": "Practices counter by success criteria",
+      "good_practices": "Best pratices",
+      "bad_practices": "Bad practices",
+      "sc": "Success criteria"
     }
   },
   "DIGITAL_STAMP": {
@@ -292,12 +304,75 @@
       }
     }
   },
+  "DIRECTORIES_PAGE": {
+    "title": "Directory:",
+    "LIST": {
+      "title": "Directories",
+      "subtitle": "List of all directories",
+      "table": {
+        "id_label": "ID",
+        "name_label": "Name",
+        "observatory_label": "Observatory",
+        "creation_label": "Creation date",
+        "tags_label": "Nº Tags",
+        "re_evaluate_label": "Re-evaluate",
+        "re_evaluate_tooltip": "Re-evaluate directory websites",
+        "edit_label": "Edit",
+        "edit_tooltip": "Edit this directory",
+        "see_tooltip": "See directory"
+      }
+    },
+    "ADD": {
+      "title": "Create a new directory",
+      "name_label": "Name",
+      "name_exists": "The inserted name already exists",
+      "observatory_label": "Show this directory in the Observatory",
+      "tags_label": "Choose the tags to form the new directory",
+      "method_label": "Choose how to form the directory",
+      "reset": "Reset",
+      "submit": "Create",
+      "messages": {
+        "success": "Directory successfully created",
+        "error": "Error creating directory"
+      }
+    },
+    "UPDATE": {
+      "title": "Directory",
+      "subtitle": "Edit",
+      "description": "Edit this directory",
+      "tags_label": "Associate Tags",
+      "default": "Undo changes",
+      "submit": "Update",
+      "delete": {
+        "title": "Delete",
+        "description": "Delete this directory",
+        "list": {
+          "title": "Important:",
+          "item1": "Only this directory will be deleted",
+          "item2": "Tags that belong to this directory will be without a directory",
+          "item3": "This action can't be undone"
+        },
+        "submit": "Delete directory"
+      },
+      "messages": {
+        "success": "DIrectory updated successfully",
+        "error": "Error updating directory"
+      }
+    },
+    "DELETE": {
+      "messages": {
+        "success": "Directory deleted successfully",
+        "error": "Error deleting directory"
+      }
+    }
+  },
   "TAGS_PAGE": {
     "title": "Tag:",
     "subtitle": "User:",
     "LIST": {
       "title": "Tags",
       "subtitle": "List of all tags",
+      "subtitle2": "List of tags from ",
       "table": {
         "id_label": "ID",
         "name_label": "Name",
@@ -316,8 +391,8 @@
       "title": "Create a new Tag",
       "name_label": "Name",
       "name_exists": "The inserted name already exists",
-      "observatorio_label": "Show this Tag in the Observatory",
-      "websites_label": "Associate Websites (optional)",
+      "directories_label": "Associate directories (optional)",
+      "websites_label": "Associate websites (optional)",
       "reset": "Reset",
       "submit": "Create",
       "messages": {
@@ -353,6 +428,7 @@
       "title": "Tag",
       "subtitle": "Edit",
       "description": "Edit this tag",
+      "directories_label": "Associate directories",
       "websites_label": "Associate Websites",
       "default": "Undo changes",
       "submit": "Update",
@@ -480,12 +556,14 @@
     "LIST": {
       "title": "Websites",
       "subtitle": "List of all websites",
+      "subtitle2": "List of websites from ",
       "generate_stamps": "Create/update digital stamps",
       "table": {
         "id_label": "ID",
         "name_label": "Name",
         "entity_label": "Entity",
         "user_label": "User",
+        "pages_label": "Nº pages",
         "creation_label": "Creation date",
         "re_evaluate_label": "Re-evaluate",
         "re_evaluate_tooltip": "Re-evaluate website pages",
@@ -504,7 +582,7 @@
       "domain_exists": "The inserted domain already exists",
       "domain_invalid": "Invalid domain",
       "domain_missing_protocol": "The domain protocol is missing (http or https)",
-      "entity_label": "Entity (optional)",
+      "entity_label": "Entities (optional)",
       "entity_invalid": "The inserted entity is invalid",
       "user_label": "User (optional)",
       "user_invalid": "The inserted user is invalid",
@@ -537,6 +615,16 @@
       "title": "Website",
       "subtitle": "Edit",
       "description": "Edit this website",
+      "declaration_label": "Accessibility declaration",
+      "declaration_non_conform": "Non conform",
+      "declaration_partial_conform": "Partially conform",
+      "declaration_conform": "Conform",
+      "declaration_date_label": "Declaration date",
+      "stamp_label": "Usability and accessibility stamp",
+      "stamp_bronze": "Bronze",
+      "stamp_silver": "Silver",
+      "stamp_gold": "Gold",
+      "stamp_date_label": "Badge date",
       "entity_label": "Entity",
       "user_label": "User",
       "tags_label": "Associate tags",
@@ -1247,6 +1335,9 @@
     "win_01": "Pop-up windows"
   },
   "CSV": {
+    "tag": "Directory",
+    "entity": "Entity",
+    "website": "Website",
     "scorerror": "Error",
     "scorewar": "Warning",
     "scoreok": "Success",
@@ -1254,7 +1345,9 @@
     "level": "Level",
     "criteria": "Criteria",
     "desc": "Description",
-    "count": "Number of occurrences"
+    "count": "Number of occurrences",
+    "value": "Value",
+    "date": "Date"
   },
   "TESTS_RESULTS": {
     "a_01a": {
