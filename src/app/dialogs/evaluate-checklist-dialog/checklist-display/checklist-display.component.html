@@ -1,0 +1,39 @@
+<mat-accordion multi>
+  <ng-template ngFor let-item [ngForOf]="checklistData.items" let-index="index">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{getDisplayTitle() | translate}}</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <section fxLayout="row">
+        <mat-checkbox fxFlex [checked]="item.checkbox === ECheckboxAnswer.S" [class.mat-checkbox-disabled]="false" disabled>
+          {{'Sim' | translate}}
+        </mat-checkbox>
+        <mat-checkbox fxFlex [checked]="item.checkbox === ECheckboxAnswer.N" [class.mat-checkbox-disabled]="false" disabled>
+          {{'Não' | translate}}
+        </mat-checkbox>
+        <mat-checkbox fxFlex [checked]="item.checkbox === ECheckboxAnswer.NA" [class.mat-checkbox-disabled]="false" disabled>
+          {{'Não Aplicável' | translate}}
+        </mat-checkbox>
+      </section>
+      <section fxLayout="row">
+        <mat-form-field fxFlex>
+          <mat-label>{{'notes' | translate}}</mat-label>
+          <textarea  matInput type="text" [value]="item.note" readonly></textarea>
+        </mat-form-field>
+      </section>
+      <section fxLayout="row" *ngIf="item.resources.length > 0">
+        <mat-form-field *ngFor="let resource of item.resources" fxFlex>
+          <mat-label>{{'resource' | translate}}</mat-label>
+          <input matInput type="text" [value]="resource.url" readonly>
+        </mat-form-field>
+      </section>
+      <section fxLayout="row" *ngIf="item.image.length > 0">
+        <mat-form-field *ngFor="let image of item.image" fxFlex>
+          <mat-label>{{'image' | translate}}</mat-label>
+          <input matInput type="text" [value]="image.photoName" readonly (click)="getImageDownloadableUrl(image)">
+        </mat-form-field>
+      </section>
+    </mat-expansion-panel>
+  </ng-template>
+</mat-accordion>

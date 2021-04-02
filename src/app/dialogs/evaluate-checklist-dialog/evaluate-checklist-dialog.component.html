@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>{{'dialog_title' | translate}}</h1>
+<mat-dialog-content>
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="First">
+      <app-checklist-display [checklistData]="data.form.checklist[0]"></app-checklist-display>
+    </mat-tab>
+    <mat-tab label="Second">
+      <app-checklist-display [checklistData]="data.form.checklist[1]"></app-checklist-display>
+    </mat-tab>
+    <mat-tab label="Third">
+      <app-checklist-display [checklistData]="data.form.checklist[2]"></app-checklist-display>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="warn" mat-dialog-close>{{'close_dialog' | translate}}</button>
+</mat-dialog-actions>

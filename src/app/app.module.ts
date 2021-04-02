@@ -110,6 +110,8 @@ import {WebsiteStatisticsComponent} from './pages/website/website-statistics/web
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {EntityStatisticsComponent} from './pages/entity/entity-statistics/entity-statistics.component';
 import {MatPaginatorIntlCustom} from './paginator-intl.service';
+import { EvaluateChecklistDialogComponent } from './dialogs/evaluate-checklist-dialog/evaluate-checklist-dialog.component';
+import { ChecklistDisplayComponent } from './dialogs/evaluate-checklist-dialog/checklist-display/checklist-display.component';
 
 registerLocaleData(localeEn, 'en');
 registerLocaleData(localePt, 'pt', localePtExtra);
@@ -356,7 +358,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     EditDirectoryDialogComponent,
     DirectoryComponent,
     DirectoryStatisticsComponent,
-    UsabilityComponent
+    UsabilityComponent,
+    EvaluateChecklistDialogComponent,
+    ChecklistDisplayComponent
   ],
   imports: [
     BrowserModule,
@@ -414,6 +418,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ChoosePagesToReEvaluateDialogComponent,
     BackgroundEvaluationsInformationDialogComponent,
     EvaluationErrorDialogComponent,
+    EvaluateChecklistDialogComponent
   ],
   providers: [
     AdminAuthGuard,

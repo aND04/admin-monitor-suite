@@ -3,9 +3,11 @@ import {UsabilityService} from '../../services/usability.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
+import {IUsabilityEvaluationRequest} from '../../models/usability';
+import {MatDialog} from '@angular/material/dialog';
+import {EvaluateChecklistDialogComponent} from '../../dialogs/evaluate-checklist-dialog/evaluate-checklist-dialog.component';
 
 @Component({
-  selector: 'app-usability',
   templateUrl: './usability.component.html',
   styleUrls: ['./usability.component.css']
 })
@@ -14,23 +16,25 @@ export class UsabilityComponent implements OnInit {
   error = false;
 
   displayedColumns = [
-    '_id',
-    'createdAt'
+    'ChecklistUuid',
+    'Processed',
+    'CreatedAt'
   ];
 
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<IUsabilityEvaluationRequest>;
   selection: any;
 
   @ViewChild('input') input: ElementRef;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private usabilityService: UsabilityService, private cd: ChangeDetectorRef) { }
+  constructor(private usabilityService: UsabilityService, private cd: ChangeDetectorRef, private dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
     this.usabilityService.getChecklistData().subscribe(checklists => {
       if (checklists !== null) {
-        this.dataSource = new MatTableDataSource(checklists);
+        this.dataSource = new MatTableDataSource<IUsabilityEvaluationRequest>(checklists);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       } else {
@@ -42,4 +46,11 @@ export class UsabilityComponent implements OnInit {
     });
   }
 
+  openChecklistDetails(checklistUuid: string): void {
+    this.usabilityService.getChecklistDetails(checklistUuid).subscribe(checklistData => {
+      this.dialog.open(EvaluateChecklistDialogComponent, {
+        data: checklistData
+      });
+    });
+  }
 }

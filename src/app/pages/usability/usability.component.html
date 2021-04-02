@@ -19,26 +19,35 @@
 
     <mat-table [dataSource]="dataSource" matSort>
 
-      <ng-container matColumnDef="_id">
-        <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex="15">
+      <ng-container matColumnDef="ChecklistUuid">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ "USABILITY_PAGE.LIST.table._id_label" | translate }}
         </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="15">
-          {{element._id}}
+        <mat-cell *matCellDef="let element">
+          {{element.ChecklistUuid}}
         </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="createdAt">
-        <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex="15">
+      <ng-container matColumnDef="Processed">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "USABILITY_PAGE.LIST.table.processed_label" | translate }}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.Processed}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="CreatedAt">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ "USABILITY_PAGE.LIST.table.createdAt_label" | translate }}
         </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="15">
-          {{element.createdAt}}
+        <mat-cell *matCellDef="let element">
+          {{element.CreatedAt}}
         </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" class="pointer" (click)="openChecklistDetails(row.ChecklistUuid)"></mat-row>
     </mat-table>
     <mat-paginator [pageSize]="50" [pageSizeOptions]="[10, 20, 50, 100, 250, 500, 1000]" showFirstLastButtons></mat-paginator>
   </mat-card-content>

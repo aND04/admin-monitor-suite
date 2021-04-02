@@ -3,3 +3,11 @@
 .table-filter input {
   width: 100%;
 }
+
+.pointer {
+  cursor: pointer;
+}
+
+.pointer:hover {
+  background-color: rgba(0,0,0,.12);
+}

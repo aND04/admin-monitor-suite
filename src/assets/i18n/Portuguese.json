@@ -1051,6 +1051,7 @@
       "subtitle": "Lista de todas as checklists de usabilidade",
       "table": {
         "_id_label": "id",
+        "processed_label": "Processado",
         "createdAt_label": "Criado em"
       }
     }
