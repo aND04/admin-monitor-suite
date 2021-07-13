@@ -118,6 +118,7 @@ import { DirectoryStatisticsComponent } from "./pages/directory/directory-statis
 import { CUSTOM_DATE_FORMATS, CustomDatePickerAdapter } from "./date-adapter";
 import { DateAdapter, MAT_DATE_FORMATS } from "@angular/material/core";
 import { TagCrawlerInformationDialogComponent } from './dialogs/tag-crawler-information-dialog/tag-crawler-information-dialog.component';
+import { UsabilityDeclarationsComponent } from './pages/usability-declarations/usability-declarations.component';
 
 registerLocaleData(localeEn, "en");
 registerLocaleData(localePt, "pt", localePtExtra);
@@ -263,6 +264,11 @@ const appRoutes: Routes = [
         component: ListOfCrawlsComponent,
         canActivate: [AdminAuthGuard],
       },
+      {
+        path: 'usability',
+        component: UsabilityDeclarationsComponent,
+        canActivate: [AdminAuthGuard],
+      },
     ],
   },
   { path: "**", component: NotFound404Component },
@@ -364,6 +370,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DirectoryComponent,
     DirectoryStatisticsComponent,
     TagCrawlerInformationDialogComponent,
+    UsabilityDeclarationsComponent,
   ],
   imports: [
     BrowserModule,
